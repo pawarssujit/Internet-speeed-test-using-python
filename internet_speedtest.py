@@ -1,16 +1,41 @@
-# Python Internet Speed Test App
-
-🚀 Welcome to the Python Internet Speed Test App! This simple project utilizes Python, Tkinter, and the Speedtest module to create a user-friendly application for measuring internet speeds.
-
-## Features:
-- **Download Speed:** Measure the current download speed in Mbps.
-- **Upload Speed:** Check the upload speed in Mbps.
-- **Interactive GUI:** Built with Tkinter for a clean and responsive user interface.
-
-## How to Use:
-1. Install Python on your system.
-2. Install the Speedtest module using `pip install speedtest-cli`.
-3. Run the script, and the Tkinter GUI window will appear.
-4. Click the 'Check Speed' button to initiate the test.
+from tkinter import *
+import speedtest
 
 
+
+def speedcheck():
+    sp = speedtest.Speedtest()
+    sp.get_servers()
+    down = str(round(sp.download()/(10**6), 3))+"mbps"
+    up = str(round(sp.download() / (10 ** 6), 3)) + "mbps"
+    lab_down.config(text=down)
+    lab_up.config(text=up)
+
+
+
+sp = Tk()
+sp.title("Internet Speed Test")
+sp.geometry("500x700")
+sp.config(bg="Green")
+
+lab = Label(sp,text="Internet speed test", font=("Time New Roman",30,"bold"),bg="Green", fg="Black")
+lab.place(x=60,y=40,height=50,width=380)
+
+lab = Label(sp,text="Download Speed", font=("Time New Roman",30,"bold"))
+lab.place(x=60,y=130,height=50,width=380)
+
+lab_down = Label(sp,text="00", font=("Time New Roman",30,"bold"))
+lab_down.place(x=60,y=200,height=50,width=380)
+
+lab = Label(sp,text="Upload Speed", font=("Time New Roman",30,"bold"))
+lab.place(x=60,y=290,height=50,width=380)
+
+
+lab_up = Label(sp,text="00", font=("Time New Roman",30,"bold"))
+lab_up.place(x=60,y=360,height=50,width=380)
+
+
+button = Button(sp, text="Check Speed", font=("Time New Roman",30,"bold"),relief=RAISED, command=speedcheck)
+button.place(x=60,y=460,height=50,width=380)
+
+sp.mainloop()
